@@ -7,18 +7,22 @@ from pyowm.uvindexapi30 import uv_client, uvindex # this package will be used to
 
 
 def find_weather(args):
-    owm = pyowm.OWM("---------------------APIKEY-------------------")
+    owm = pyowm.OWM("e9f1c4da2abce2e550f34cf588b1cc34")
     mgr = owm.weather_manager()
-    observation = mgr.weather_at_place(args.city)
-    w = observation.weather
-    temp = w.temperature('celsius')
-    status = w.detailed_status
-    humidity = w.humidity
-    pressure = w.pressure['press']
-    temperature = str(int(temp['temp']))+" degrees Celcius"
-    windSpeed = str(w.wind()['speed'])
-    windDegree = str(w.wind()['deg'])
-    return "\nDetailed Weather Updates::: " + args.city.upper() + "\nHumidity: " + str(humidity) + "\nPressure: " + str(pressure) + "\nTemperature: " + str(temperature) + "\nWind Speed: " + windSpeed + "\nWind Degree: " + windDegree
+    try:
+        observation = mgr.weather_at_place(args.city)
+        w = observation.weather
+        temp = w.temperature('celsius')
+        status = w.detailed_status
+        humidity = w.humidity
+        pressure = w.pressure['press']
+        temperature = str(int(temp['temp']))+" degrees Celcius"
+        windSpeed = str(w.wind()['speed'])
+        windDegree = str(w.wind()['deg'])
+        return "\nDetailed Weather Updates::: " + args.city.upper() + "\nHumidity: " + str(humidity) + "\nPressure: " + str(pressure) + "\nTemperature: " + str(temperature) + "\nWind Speed: " + windSpeed + "\nWind Degree: " + windDegree
+    except:
+        return "No city with that name found" # if the user enters a city which is not present, or enters a wrong name 
+        # the exception gets handled successfully
 
 
 if __name__ == '__main__':
